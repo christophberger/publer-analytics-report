@@ -406,17 +406,13 @@ func readOverviewFile(filename string) (*OverviewData, error) {
 		fmt.Sscanf(rateStr, "%f", &data.EngagementRate)
 	}
 
-	// Read empty line
+	// Read "Top Countries" header line
 	_, err = reader.Read()
 	if err != nil {
 		return nil, err
 	}
 
-	// Read country headers
-	_, err = reader.Read()
-	if err != nil {
-		return nil, err
-	}
+	// Start reading countries immediately (no separate country headers line)
 
 	// Read country data
 	for i := 0; i < 10; i++ { // Read up to 10 countries
@@ -570,6 +566,15 @@ func prepareReportData(overview *OverviewData, posts []PostData, hashtags []Hash
 		EngagementRate:       overview.EngagementRate,
 		EngagementRateChange: 0.0, // TODO: Calculate from previous period
 		TopCountries:         overview.TopCountries,
+	}
+
+	// Sort countries by users (descending)
+	for i := 0; i < len(data.TopCountries)-1; i++ {
+		for j := i + 1; j < len(data.TopCountries); j++ {
+			if data.TopCountries[i].Users < data.TopCountries[j].Users {
+				data.TopCountries[i], data.TopCountries[j] = data.TopCountries[j], data.TopCountries[i]
+			}
+		}
 	}
 
 	// Sort posts by reactions (descending)
