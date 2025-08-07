@@ -23,7 +23,7 @@ For the period <insert period from the sources>
 
 ### Top Hashtags by Score
 
-<sort them by reach count, from highest to lowest>
+<sort them by score, from highest to lowest>
 
 1. #<hashtag> (<score>)
 2. #<hashtag> (<score>)

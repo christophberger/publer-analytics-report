@@ -37,6 +37,8 @@ It shall write the report to a file whose name includes the Publer workspace nam
 
 Example: Safe Swiss Cloud 2025-07.md
 
+This is just an example, the real file name should contain the name of the actual workspace and the actual year and month as found in the input file names. 
+
 For the top-performing posts, the tool shall remove all newlines from the post text.
 
 For the report sections

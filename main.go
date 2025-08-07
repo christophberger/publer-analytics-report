@@ -84,6 +84,107 @@ type ReportData struct {
 	NextSteps            string
 }
 
+func extractDateFromFilename(filename string) (string, error) {
+	// Extract the date part from filename like: "Workspace ∙ Overview ∙ 1 Jul 2025 - 31 Jul 2025.csv"
+	parts := strings.Split(filename, "∙")
+	if len(parts) < 3 {
+		return "", fmt.Errorf("invalid filename format")
+	}
+
+	datePart := strings.TrimSpace(parts[len(parts)-1]) // Get the last part containing dates
+	datePart = strings.TrimSuffix(datePart, ".csv")
+
+	// Split the date range: "1 Jul 2025 - 31 Jul 2025"
+	dateRange := strings.Split(datePart, "-")
+	if len(dateRange) < 1 {
+		return "", fmt.Errorf("invalid date format in filename")
+	}
+
+	// Take the start date: "1 Jul 2025"
+	startDate := strings.TrimSpace(dateRange[0])
+	dateComponents := strings.Fields(startDate)
+	if len(dateComponents) < 3 {
+		return "", fmt.Errorf("invalid start date format")
+	}
+
+	// Parse month, year (we don't need the day for the filename)
+	month := dateComponents[1]
+	year := dateComponents[2]
+
+	// Convert month abbreviation to number
+	monthMap := map[string]string{
+		"Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", "May": "05", "Jun": "06",
+		"Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12",
+	}
+
+	monthNum, ok := monthMap[month]
+	if !ok {
+		return "", fmt.Errorf("invalid month: %s", month)
+	}
+
+	return fmt.Sprintf("%s-%s", year, monthNum), nil
+}
+
+func extractPeriodFromFilename(filename string) string {
+	// Extract the date part from filename like: "Workspace ∙ Overview ∙ 1 Jul 2025 - 31 Jul 2025.csv"
+	parts := strings.Split(filename, "∙")
+	if len(parts) < 3 {
+		return "Unknown Period"
+	}
+
+	datePart := strings.TrimSpace(parts[len(parts)-1]) // Get the last part containing dates
+	datePart = strings.TrimSuffix(datePart, ".csv")
+
+	return datePart
+}
+
+func extractMonthFromFilename(filename string) string {
+	period := extractPeriodFromFilename(filename)
+
+	// Split the date range: "1 Jul 2025 - 31 Jul 2025"
+	dateRange := strings.Split(period, "-")
+	if len(dateRange) < 1 {
+		return "Unknown Month"
+	}
+
+	// Take the start date: "1 Jul 2025"
+	startDate := strings.TrimSpace(dateRange[0])
+	dateComponents := strings.Fields(startDate)
+	if len(dateComponents) < 3 {
+		return "Unknown Month"
+	}
+
+	// Parse month, year
+	month := dateComponents[1]
+	year := dateComponents[2]
+
+	// Convert month abbreviation to name
+	monthNames := map[string]string{
+		"Jan": "January", "Feb": "February", "Mar": "March", "Apr": "April", "May": "May", "Jun": "June",
+		"Jul": "July", "Aug": "August", "Sep": "September", "Oct": "October", "Nov": "November", "Dec": "December",
+	}
+
+	monthName, ok := monthNames[month]
+	if !ok {
+		return "Unknown Month"
+	}
+
+	return fmt.Sprintf("%s %s", monthName, year)
+}
+
+func generateReportFilename(workspaceName, overviewFile string) (string, error) {
+	datePart, err := extractDateFromFilename(overviewFile)
+	if err != nil {
+		return "", err
+	}
+
+	// Clean workspace name - remove "(Workspace)" part
+	cleanWorkspace := strings.ReplaceAll(workspaceName, "(Workspace)", "")
+	cleanWorkspace = strings.TrimSpace(cleanWorkspace)
+
+	return fmt.Sprintf("%s %s.md", cleanWorkspace, datePart), nil
+}
+
 func findCSVFiles(param string) (string, string, string, error) {
 	info, err := os.Stat(param)
 	if err != nil {
@@ -211,7 +312,7 @@ func main() {
 		log.Fatalf("Error reading hashtag analysis file: %v", err)
 	}
 
-	reportData := prepareReportData(overviewData, postsData, hashtagData)
+	reportData := prepareReportData(overviewData, postsData, hashtagData, overviewFile)
 
 	insights, err := generateInsights(reportData, config)
 	if err != nil {
@@ -228,12 +329,18 @@ func main() {
 	reportData.Insights = insights
 	reportData.NextSteps = nextSteps
 
-	err = generateReport(reportData)
+	// Generate the report filename
+	reportFilename, err := generateReportFilename(overviewData.WorkspaceName, overviewFile)
+	if err != nil {
+		log.Fatalf("Error generating report filename: %v", err)
+	}
+
+	err = generateReport(reportData, reportFilename)
 	if err != nil {
 		log.Fatalf("Error generating report: %v", err)
 	}
 
-	fmt.Printf("Report generated successfully: %s %s.md\n", overviewData.WorkspaceName, "2025-07")
+	fmt.Printf("Report generated successfully: %s\n", reportFilename)
 }
 
 func loadConfig(filename string) (*Config, error) {
@@ -446,10 +553,14 @@ func readHashtagAnalysisFile(filename string) ([]HashtagData, error) {
 	return hashtags, nil
 }
 
-func prepareReportData(overview *OverviewData, posts []PostData, hashtags []HashtagData) *ReportData {
+func prepareReportData(overview *OverviewData, posts []PostData, hashtags []HashtagData, overviewFile string) *ReportData {
+	// Extract date information from filename
+	period := extractPeriodFromFilename(overviewFile)
+	month := extractMonthFromFilename(overviewFile)
+
 	data := &ReportData{
-		Month:                "July 2025",
-		Period:               "1 Jul 2025 - 31 Jul 2025",
+		Month:                month,
+		Period:               period,
 		Followers:            overview.Followers,
 		FollowersChange:      0, // TODO: Calculate from previous period
 		Reach:                overview.Reach,
@@ -601,7 +712,7 @@ func callOpenAI(prompt string, config *Config) (string, error) {
 	return strings.TrimSpace(response.Choices[0].Message.Content), nil
 }
 
-func generateReport(data *ReportData) error {
+func generateReport(data *ReportData, filename string) error {
 	tmpl := `# {{.Month}} KPIs
 
 For the period {{.Period}}
@@ -648,10 +759,17 @@ For the period {{.Period}}
 			return a + b
 		},
 		"truncate": func(s string, length int) string {
-			if len(s) <= length {
-				return s
+			// Remove all newlines first
+			clean := strings.ReplaceAll(s, "\n", " ")
+			clean = strings.ReplaceAll(clean, "\r", " ")
+			// Remove extra whitespace
+			words := strings.Fields(clean)
+			clean = strings.Join(words, " ")
+
+			if len(clean) <= length {
+				return clean
 			}
-			return s[:length] + "..."
+			return clean[:length] + "..."
 		},
 	}
 
@@ -660,7 +778,6 @@ For the period {{.Period}}
 		return err
 	}
 
-	filename := "Safe Swiss Cloud 2025-07.md"
 	file, err := os.Create(filename)
 	if err != nil {
 		return err
