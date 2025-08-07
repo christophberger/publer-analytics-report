@@ -588,10 +588,10 @@ func prepareReportData(overview *OverviewData, posts []PostData, hashtags []Hash
 		data.TopPosts = posts
 	}
 
-	// Sort hashtags by reach (descending)
+	// Sort hashtags by score (descending)
 	for i := 0; i < len(hashtags)-1; i++ {
 		for j := i + 1; j < len(hashtags); j++ {
-			if hashtags[i].Reach < hashtags[j].Reach {
+			if hashtags[i].Score < hashtags[j].Score {
 				hashtags[i], hashtags[j] = hashtags[j], hashtags[i]
 			}
 		}
