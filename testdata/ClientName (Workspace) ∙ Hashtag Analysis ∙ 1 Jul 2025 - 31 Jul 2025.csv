@@ -1,0 +1,45 @@
+# Safe Swiss Cloud Analytics CSV Export
+# Start Date: 1 Jul 2025
+# End Date: 31 Jul 2025
+
+
+Hashtag,Top performing posts,Posts,Recent posts,Score,Reach,Reactions,Comments,Shares,Video views
+#agenticai,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,4.76,0,5,0,0,0
+#aiinnovation,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,5.71,0,6,0,0,0
+#aiinsights,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,6.67,0,5,2,0,0
+#aiproductivity,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,10.48,0,7,4,0,0
+#airisks,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,3.81,0,3,1,0,0
+#aistrategy,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,0.95,0,1,0,0,0
+#aitransformation,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,4.76,0,5,0,0,0
+#aiunderstanding,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,5.71,0,4,2,0,0
+#artificialintelligence,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,5.71,0,6,0,0,0
+#businessautomation,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,4.76,0,5,0,0,0
+#businessleadership,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,0.95,0,1,0,0,0
+#businessresilience,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,7.62,0,7,1,0,0
+#cloudmigration,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,4.76,0,5,0,0,0
+#cloudstrategy,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,4.76,0,5,0,0,0
+#dataprivacy,https://www.linkedin.com/feed/update/urn:li:share:12345,2,https://www.linkedin.com/feed/update/urn:li:share:12345,13.33,0,13,1,0,0
+#datasecurity,https://www.linkedin.com/feed/update/urn:li:share:12345,2,https://www.linkedin.com/feed/update/urn:li:share:12345,11.43,0,10,2,0,0
+#digitalintelligence,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,5.71,0,4,2,0,0
+#digitalsovereignty,https://www.linkedin.com/feed/update/urn:li:share:12345,2,https://www.linkedin.com/feed/update/urn:li:share:12345,16.19,0,15,2,0,0
+#digitaltransformation,https://www.linkedin.com/feed/update/urn:li:share:12345,3,https://www.linkedin.com/feed/update/urn:li:share:12345,10.48,0,9,2,0,0
+#enterpriseai,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,5.71,0,6,0,0,0
+#eudataact,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,4.76,0,5,0,0,0
+#europeantech,https://www.linkedin.com/feed/update/urn:li:share:12345,2,https://www.linkedin.com/feed/update/urn:li:share:12345,16.19,0,15,2,0,0
+#futureofai,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,6.67,0,5,2,0,0
+#futureofwork,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,5.71,0,6,0,0,0
+#healthcareai,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,10.48,0,10,1,0,0
+#hybridwork,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,10.48,0,7,4,0,0
+#medicalinnovation,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,10.48,0,10,1,0,0
+#opensource,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,8.57,0,8,1,0,0
+#operationalefficiency,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,4.76,0,5,0,0,0
+#privateai,https://www.linkedin.com/feed/update/urn:li:share:12345,3,https://www.linkedin.com/feed/update/urn:li:share:12345,19.05,0,16,4,0,0
+#reasoningmodels,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,6.67,0,5,2,0,0
+#sovereignit,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,7.62,0,7,1,0,0
+#talentretention,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,10.48,0,7,4,0,0
+#techleadership,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,6.67,0,5,2,0,0
+#vendorlockin,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,4.76,0,5,0,0,0
+#workflowautomation,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,4.76,0,3,2,0,0
+#workplaceinnovation,https://www.linkedin.com/feed/update/urn:li:share:12345,1,https://www.linkedin.com/feed/update/urn:li:share:12345,10.48,0,7,4,0,0
+
+

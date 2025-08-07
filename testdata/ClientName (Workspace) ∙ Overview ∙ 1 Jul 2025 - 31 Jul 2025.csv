@@ -1,0 +1,105 @@
+# Start Date: 1 Jul 2025
+# End Date: 31 Jul 2025
+
+
+Workspace Name,Number of Social Accounts,Followers,Reach,Reach Rate,Video Views,Engagements,Engagement Rate,Link Clicks,Click Through Rate,Best Time to post,Members
+ACME Inc (Workspace),4,4750,507,3.59,0,105,20.71%,0,0.0%,Thursday 11:00,4
+
+
+Top Countries,Users,"",Top Cities,Users,""
+Switzerland,446,"",,
+Germany,221,"",,
+Luxembourg,54,"",,
+Austria,51,"",,
+Italy,50,"",,
+United Kingdom,36,"",,
+Greece,35,"",,
+India,28,"",,
+Spain,26,"",,
+France,24,"",,
+
+
+Post,Post Text,Reach,Reach rate,Video views,Likes,Comments,Shares,Post clicks,Engagement rate,Link clicks,Click through rate
+https://www.linkedin.com/feed/update/urn:li:share:1234,"",34,2.65,-,1,0,0,1,5.88,-,-
+https://www.linkedin.com/feed/update/urn:li:share:1234,"Your AI might be sharing more than you think.
+
+Public AI models store fragments of their training data, sometimes even verbatim. When prompted in specific ways, they can reproduce this information. Even more concerning are prompt injection attacks that can bypass safeguards, tricking models into revealing sensitive data.
+
+Think of it as leaving your documents in a shared workspace where clever visitors might find ways to peek at them.
+
+This isn't theoretical. Researchers have demonstrated attacks that extract email addresses, phone numbers, and even medical records from public models.
+
+Private AI infrastructure is the strongest defense against this fundamental vulnerability.
+
+#PrivateAI #DataSecurity #AIRisks",-,-,-,3,1,-,-,-,-,-
+https://www.linkedin.com/feed/update/urn:li:share:1234,"",42,3.27,-,2,0,0,0,4.76,-,-
+https://www.linkedin.com/feed/update/urn:li:share:1234,"AI is reshaping business DNA.
+
+Rolling out AI in your business might seem like just deploying another tool. However, the deep integration of large language models with business data sources creates a ripple effect across business operations that shouldn't be underestimated.
+
+As AI becomes central to operations, priorities must shift:
+
+- Data governance becomes your foundation. Decide which data and tools AI may get access to, to control data flow. 
+- Leaders need AI literacy, not to code models but to distinguish genuine opportunities from the noise of AI hype.
+- Change management becomes essential as teams adapt to working alongside AI systems.
+
+The last point is even more important as AI is still evolving and also facilitates creating flexible and adaptive business workflows.
+
+Success comes from balancing technical implementation with compliance, particularly in Europe, where data sovereignty has become increasingly important.
+
+The question isn't whether to adopt AI, but whether your organisation is developing the right capabilities to thrive with it.
+
+#AIStrategy #DigitalTransformation #BusinessLeadership",-,-,-,1,0,-,-,-,-,-
+https://www.linkedin.com/feed/update/urn:li:share:1234,"",43,3.35,-,1,0,0,0,2.33,-,-
+https://www.linkedin.com/feed/update/urn:li:share:1234,"Some very clear limitations have been identified in AI’s reasoning abilities. Does this point to an innate weakness in the technology?
+
+AI models have a clear ""sweet spot"" for reasoning tasks. They perform well on moderately complex problems but can fail on both simple and highly complex ones. Apple's research team confirmed this recently, showing how models sometimes overthink simple questions while missing key steps in complex ones (see: https://machinelearning.apple.com/research/illusion-of-thinking).
+
+Does this indicate a flaw in the technology? This is just where the technology is today, and it is very likely to get better as it evolves. Right now, the key is knowing how to use AI for what it does best while recognising where human oversight is essential. As models improve, so will their ability to handle complexity. But for now, the art of using reasoning models well lies in properly adjusting the complexity of our prompts, including splitting up overly complex problems into multiple prompts of moderate complexity. 
+
+Just like you would do as a human when asked to work on a complex task.
+
+#AIInsights #TechLeadership #FutureOfAI #ReasoningModels",-,-,-,5,2,-,-,-,-,-
+https://www.linkedin.com/feed/update/urn:li:share:1234,"",45,3.5,-,2,0,0,3,11.11,-,-
+https://www.linkedin.com/feed/update/urn:li:share:1234,"AI's most profound impact isn't in chatbots.
+
+It's in saving lives.
+
+While many focus on generative AI applications, AI healthcare is where this technology delivers the highest value. AI systems now detect cancer in medical images with remarkable precision, sometimes outperforming human radiologists. AI has also been reported to accelerate specific tasks in early-stage drug discovery (such as target identification, compound screening, and drug efficacy prediction), which is a promising advancement towards more efficient drug development.
+
+But it's not all sunshine and roses. AI in healthcare faces a prevalent challenge: patient data privacy. At this point, there is virtually no way around private AI; the only viable way of allowing healthcare providers to use these capabilities while keeping sensitive information within their control, on European servers if needed.
+
+When sensitive health data remains sovereign within a trusted infrastructure, AI can unfold its full potential in healthcare while keeping patient data confidential.
+
+#HealthcareAI #PrivateAI #MedicalInnovation",-,-,-,10,1,-,-,-,-,-
+https://www.linkedin.com/feed/update/urn:li:share:1234,"",35,2.73,-,1,0,0,0,2.86,-,-
+https://www.linkedin.com/feed/update/urn:li:share:1234,"For AI to succeed in your organization, embed it deeply into your daily workflows and culture.
+
+Many organizations do not fully harness the capabilities of AI. Simply providing teams with access to tools like ChatGPT and other AI platforms does not automatically lead to greater productivity or satisfaction. In fact, the opposite can occur: employees may find themselves spending excessive time copying and pasting data between interfaces, crafting and refining prompts, and post-processing AI-generated content that may not meet quality standards.
+
+Think smarter! Integrate AI tools into existing workflows—document processing, customer queries, compliance reporting—where they can immediately reduce friction. AI should work without having to think about prompts or shift data around.
+
+To ensure success in adopting AI this way, start small: identify a specific workflow, implement a contained solution and build on proven results.  By using private AI infrastructure, you maintain both security and compliance without sacrificing capability.
+
+When done correctly, AI stops being a buzzword and starts solving real problems - quietly, efficiently and safely.
+
+#PrivateAI #WorkflowAutomation #DigitalTransformation",-,-,-,3,2,-,-,-,-,-
+
+
+Hashtag,Engagement
+#digitaltransformation,
+#privateai,
+#dataprivacy,
+#datasecurity,
+#digitalsovereignty,
+#europeantech,
+#agenticai,
+#aiinnovation,
+#aiinsights,
+#aiproductivity,
+
+
+Member,Reach,Engagement,Posts
+Christoph Berger,507,105,23
+
+

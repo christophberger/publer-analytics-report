@@ -1,0 +1,218 @@
+# ACME Inc Analytics CSV Export
+# Start Date: 1 Jul 2025
+# End Date: 31 Jul 2025
+
+
+Date,Social account,Social network,Post link,Post text,Post type,Reach,Reach rate (%),Reactions,Comments,Shares,Engagement rate (%),Link clicks,Click through rate (%),Action
+2025-07-31 10:45,ACME Inc,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,Sign Up | LinkedIn,Link,34,2.65,1,0,0,5.88,-,-,-
+2025-07-31 09:04,Carla Smith,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"Your AI might be sharing more than you think.
+
+Public AI models store fragments of their training data, sometimes even verbatim. When prompted in specific ways, they can reproduce this information. Even more concerning are prompt injection attacks that can bypass safeguards, tricking models into revealing sensitive data.
+
+Think of it as leaving your documents in a shared workspace where clever visitors might find ways to peek at them.
+
+This isn't theoretical. Researchers have demonstrated attacks that extract email addresses, phone numbers, and even medical records from public models.
+
+Private AI infrastructure is the strongest defense against this fundamental vulnerability.
+
+#PrivateAI #DataSecurity #AIRisks",Status,-,-,3,1,-,-,-,-,-
+2025-07-30 12:27,ACME Inc,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,Sign Up | LinkedIn,Link,42,3.27,2,0,0,4.76,-,-,-
+2025-07-30 11:19,George Booney,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"AI is reshaping business DNA.
+
+Rolling out AI in your business might seem like just deploying another tool. However, the deep integration of large language models with business data sources creates a ripple effect across business operations that shouldn't be underestimated.
+
+As AI becomes central to operations, priorities must shift:
+
+- Data governance becomes your foundation. Decide which data and tools AI may get access to, to control data flow. 
+- Leaders need AI literacy, not to code models but to distinguish genuine opportunities from the noise of AI hype.
+- Change management becomes essential as teams adapt to working alongside AI systems.
+
+The last point is even more important as AI is still evolving and also facilitates creating flexible and adaptive business workflows.
+
+Success comes from balancing technical implementation with compliance, particularly in Europe, where data sovereignty has become increasingly important.
+
+The question isn't whether to adopt AI, but whether your organisation is developing the right capabilities to thrive with it.
+
+#AIStrategy #DigitalTransformation #BusinessLeadership",Status,-,-,1,0,-,-,-,-,-
+2025-07-28 09:57,ACME Inc,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,Sign Up | LinkedIn,Link,43,3.35,1,0,0,2.33,-,-,-
+2025-07-28 09:22,John Doe,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"Some very clear limitations have been identified in AI’s reasoning abilities. Does this point to an innate weakness in the technology?
+
+AI models have a clear ""sweet spot"" for reasoning tasks. They perform well on moderately complex problems but can fail on both simple and highly complex ones. Apple's research team confirmed this recently, showing how models sometimes overthink simple questions while missing key steps in complex ones (see: https://machinelearning.apple.com/research/illusion-of-thinking).
+
+Does this indicate a flaw in the technology? This is just where the technology is today, and it is very likely to get better as it evolves. Right now, the key is knowing how to use AI for what it does best while recognising where human oversight is essential. As models improve, so will their ability to handle complexity. But for now, the art of using reasoning models well lies in properly adjusting the complexity of our prompts, including splitting up overly complex problems into multiple prompts of moderate complexity. 
+
+Just like you would do as a human when asked to work on a complex task.
+
+#AIInsights #TechLeadership #FutureOfAI #ReasoningModels",Link,-,-,5,2,-,-,-,-,-
+2025-07-24 09:44,ACME Inc,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,Sign Up | LinkedIn,Link,45,3.5,2,0,0,11.11,-,-,-
+2025-07-24 09:06,George Booney,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"AI's most profound impact isn't in chatbots.
+
+It's in saving lives.
+
+While many focus on generative AI applications, AI healthcare is where this technology delivers the highest value. AI systems now detect cancer in medical images with remarkable precision, sometimes outperforming human radiologists. AI has also been reported to accelerate specific tasks in early-stage drug discovery (such as target identification, compound screening, and drug efficacy prediction), which is a promising advancement towards more efficient drug development.
+
+But it's not all sunshine and roses. AI in healthcare faces a prevalent challenge: patient data privacy. At this point, there is virtually no way around private AI; the only viable way of allowing healthcare providers to use these capabilities while keeping sensitive information within their control, on European servers if needed.
+
+When sensitive health data remains sovereign within a trusted infrastructure, AI can unfold its full potential in healthcare while keeping patient data confidential.
+
+#HealthcareAI #PrivateAI #MedicalInnovation",Status,-,-,10,1,-,-,-,-,-
+2025-07-22 10:57,ACME Inc,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,Sign Up | LinkedIn,Link,35,2.73,1,0,0,2.86,-,-,-
+2025-07-22 09:24,Carla Smith,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"For AI to succeed in your organization, embed it deeply into your daily workflows and culture.
+
+Many organizations do not fully harness the capabilities of AI. Simply providing teams with access to tools like ChatGPT and other AI platforms does not automatically lead to greater productivity or satisfaction. In fact, the opposite can occur: employees may find themselves spending excessive time copying and pasting data between interfaces, crafting and refining prompts, and post-processing AI-generated content that may not meet quality standards.
+
+Think smarter! Integrate AI tools into existing workflows—document processing, customer queries, compliance reporting—where they can immediately reduce friction. AI should work without having to think about prompts or shift data around.
+
+To ensure success in adopting AI this way, start small: identify a specific workflow, implement a contained solution and build on proven results.  By using private AI infrastructure, you maintain both security and compliance without sacrificing capability.
+
+When done correctly, AI stops being a buzzword and starts solving real problems - quietly, efficiently and safely.
+
+#PrivateAI #WorkflowAutomation #DigitalTransformation",Status,-,-,3,2,-,-,-,-,-
+2025-07-17 09:59,ACME Inc,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,Sign Up | LinkedIn,Link,40,3.12,0,0,0,5.0,-,-,-
+2025-07-17 09:16,John Doe,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"The human brain has roughly 100 trillion neural connections. 
+
+Modern AI systems work with just 1 trillion connections, yet they demonstrate knowledge that spans virtually every field of human expertise.
+
+Granted, AI systems benefit from raw processing power, but that's only half of the equation. The other half is about learning efficiency. While humans require years of education and experience to master subjects, AI models absorb vast amounts of information during training and make connections across disciplines instantly. And, unlike humans, they don't forget what they have learnt.
+
+Synthesizing knowledge from completely different domains is a truly intriguing feature of LLMs. They might connect insights from medical research with engineering principles, or link historical patterns with modern business strategies. This cross-pollination happens naturally within their neural networks. Few humans achieve this level of interdisciplinary thinking, let alone with the same ease as LLMs do. 
+
+The implications for business are profound. Today's LLMs can process and connect information at scales impossible for human minds. This creates opportunities for collaboration between human creativity and AI's analytical breadth.
+
+Don't miss these opportunities.
+
+#AIInnovation #EnterpriseAI #FutureOfWork #ArtificialIntelligence",Status,-,-,6,0,-,-,-,-,-
+2025-07-16 09:07,George Booney,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"Discuss The Exit As You Make The Entry – Avoiding Cloud Lock‑in
+
+Despite years of cloud adoption, concerns around vendor lock-in still surface among European businesses. These concerns typically arise with core IT infrastructure, including Remote Desktop environments, ERP systems, industry-specific applications, and related backup and maintenance services.
+
+Importantly, lock-in isn't always the result of a provider's practices. In many cases, it stems from the workloads themselves. Large datasets are inherently harder to move, regardless of vendor. Similarly, if your infrastructure relies heavily on proprietary services unique to one platform, switching becomes complex by design.
+
+Understanding the interplay between technical dependencies and commercial terms is essential when evaluating providers. The goal is not just to avoid restrictive contracts, but also to ensure your infrastructure remains agile as your needs evolve.
+
+🔎 What to Examine When Selecting a Cloud Provider
+
+1. Network cost differences (ingress vs. egress)
+
+Data arriving in the cloud (ingress) is often free or low cost, whereas data leaving (egress) can carry steep charges. These costs often only surface when customers consider migrating away. You'll see significant differences when comparing providers. Note that the EU Data Act will impose a gradual withdrawal of switching charges by January 2027.
+
+2. Contractual exit support
+
+Carefully examine the provider's contract for clearly defined exit clauses, including formal obligations to support migration efforts. Both the upcoming EU Data Act and DORA regulation require such provisions. We've seen cases where providers cite intellectual property concerns to restrict access to technical systems needed for migration. Ensure the contract protects against such practices.
+
+3. Compatibility with standard orchestration stacks
+
+Evaluate whether the provider relies on proprietary orchestration layers or supports standard, widely adopted technology stacks. While custom overlays may simplify certain administrative tasks, they can hinder interoperability and limit your options if you later decide to migrate. Prioritise providers that embrace familiar frameworks or open standards.
+
+4. Talk to your provider: exit support should be a selling point
+
+Discuss your migration scenarios openly with your cloud provider's sales and solution engineering teams. Ask how they've helped customers move workloads elsewhere. Flexibility should be a key part of their value proposition. Some workloads are meant to stay long-term, others are temporary by design, such as bridging a gap until in-house infrastructure is ready.
+
+Ultimately, the goal is not to avoid all commitment, but to retain enough room to adapt. In regulated and stability-focused markets like Switzerland, the ability to respond to change should be a design principle, not an afterthought.
+
+#CloudStrategy #VendorLockIn #DigitalTransformation #CloudMigration #EUDataAct",Status,-,-,5,0,-,-,-,-,-
+2025-07-14 10:28,ACME Inc,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,Sign Up | LinkedIn,Link,64,4.98,2,0,0,3.13,-,-,-
+2025-07-14 09:11,John Doe,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"Do AI systems actually understand, or just mimic understanding brilliantly?
+
+Geoffrey Hinton, the ""Godfather of AI,"" believes they genuinely understand. He reasons that in order to predict the next word accurately, systems must truly comprehend sentences, not just follow statistical patterns.
+
+When Hinton tested ChatGPT-4 with a house painting riddle, the AI didn't just solve it in a straightforward manner but reasoned through implications he hadn't even considered. 
+
+The riddle goes as follows: 
+
+""The rooms in my house are painted white or blue or yellow. And yellow paint fades to white within a year. In two years' time, I'd like all the rooms to be white. What should I do?""
+
+ChatGPT-4 answered to only paint the blue rooms white because the yellow ones would fade anyway. But then it went on to explain that if Hinton paints the yellow rooms white, there's a risk the color might be off when the yellow fades; moreover, he would waste resources if he'd paint a room white that is going to fade to white anyway.
+
+It's hard to explain such results as mere statistical simulation.
+
+What excites me most is that Hinton suggests these systems may already be more efficient at learning than human brains, despite having fewer connections. A chatbot with one trillion connections knows more than a human brain with 100 trillion connections.
+
+This understanding capability is what makes private AI so powerful for enterprises. When AI truly comprehends your business context rather than just processing keywords, it can reveal insights hidden across documents and connect information in ways that create real competitive advantage.
+
+In the end, the central question isn't how exactly AI understands. Let's stay pragmatic and ask ourselves instead: how can we capitalize on that understanding?
+
+#AIUnderstanding #DigitalIntelligence",Status,-,-,4,2,-,-,-,-,-
+2025-07-10 11:07,ACME Inc,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,Sign Up | LinkedIn,Link,47,3.66,1,0,0,6.38,-,-,-
+2025-07-10 08:53,Carla Smith,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"AI isn't optional in today's work environments.
+
+Employees want the same tech at work that they use in their personal lives. Why should checking expenses be harder than ordering dinner?
+
+Hybrid workplaces make this even more important. People working from different locations need tools that help them collaborate without friction.
+
+But what employees really want is technology that gets out of their way. They're tired of clunky systems that waste their time. They want AI that handles routine tasks while they focus on what matters. When tools align with natural workflows, productivity soars without the friction. AI makes tooling intelligently adaptive to workflows, especially informal ad hoc workflows. 
+
+Companies that provide these tools have an edge in attracting talent. Good people go where they can do their best work.
+
+#WorkplaceInnovation #HybridWork #TalentRetention #AIProductivity",Status,-,-,7,4,-,-,-,-,-
+2025-07-08 10:24,ACME Inc,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,Sign Up | LinkedIn,Link,56,4.36,2,0,0,7.14,-,-,-
+2025-07-08 09:02,George Booney,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"Lyon makes a strategic shift to digital sovereignty.
+
+Lyon, France's third-largest city, is transitioning from Microsoft to open source alternatives like Linux and OnlyOffice. This affects services for over a million citizens delivered by 10,000 government employees.
+
+While cost efficiency is a factor, Lyon's primary goal is digital sovereignty. By selecting European-developed solutions and regional data hosting, they're prioritising control over their digital infrastructure while supporting local tech ecosystems.
+
+The timing aligns with similar moves in Denmark and Germany, pointing to a broader European shift toward technology independence. As data sovereignty concerns grow, proximity and control of digital assets become increasingly important.
+
+This approach isn't limited to government institutions. Businesses can also benefit from digital sovereignty by exploring European service and infrastructure providers, potentially reducing their vulnerability to geopolitical uncertainties.
+
+The real-world results of Lyon's transition will be worth watching.
+
+#DigitalSovereignty #OpenSource #EuropeanTech #DataPrivacy",Status,-,-,8,1,-,-,-,-,-
+2025-07-03 11:03,ACME Inc,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,Sign Up | LinkedIn,Link,53,4.12,1,0,0,1.89,-,-,-
+2025-07-03 09:03,John Doe,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"What is sovereign IT, and why should you care?
+
+
+Sovereign IT is technology infrastructure owned and controlled by organisations local to, or sharing the same principles of strong, user-friendly as well as privacy and business focused regulation. In other words. If your business is located in Europe, then you'd want to prefer European IT service and infrastructure providers over non-European ones. IT sovereignty means your systems aren't subject to international trade disputes, geopolitical tensions, or arbitrary interference from external parties. 
+
+Take Denmark's recent decision to replace foreign, proprietary systems with Linux and LibreOffice across government departments. They recognised that true digital sovereignty requires control over their technological foundations.
+
+If you're running a European organisation, this matters immensely. In many sectors, sovereignty is absolutely critical: government services, financial institutions, hospitals and other healthcare providers, telecommunications networks, and manufacturing companies.
+
+These scenarios illustrate what's at stake: 
+
+– A hospital's patient management system suddenly becomes inaccessible due to foreign government sanctions
+– A professional services company cannot run an important video conference because undersea cables are damaged during international conflicts
+– A manufacturing SMB loses access to critical CAD software due to trade restrictions
+– An e-commerce business finds its data subject to foreign government enquiries (see the Cloud Act: https://en.wikipedia.org/wiki/CLOUD_Act)
+
+These aren't far-fetched scenarios but real risks that sovereign IT significantly reduces.
+
+When you control your technology stack locally, you protect your organisation from:
+
+- Service interruptions due to geopolitical tensions
+- Data access restrictions imposed by foreign governments
+- Infrastructure vulnerabilities from distant dependencies
+
+European businesses deserve technology solutions that they can control themselves. Sovereign IT ensures your organisation's resilience and independence in an increasingly uncertain world.
+
+#SovereignIT #DigitalSovereignty #EuropeanTech #DataSecurity #BusinessResilience",Link,-,-,7,1,-,-,-,-,-
+2025-07-01 16:24,ACME Inc,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,Sign Up | LinkedIn,Link,48,3.74,2,0,1,8.33,-,-,-
+2025-07-01 14:24,George Booney,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:12345,"Automation is getting smarter, its applications broader—but compliance questions become more challenging.
+
+
+Consider a common scenario: RFP Analysis.
+
+- You receive a Request for Proposal (RFP) as part of a public tender, marked clearly: “Confidential – do not share with third parties.”
+
+- AI tools could certainly be helpful by quickly identifying key requirements, matching them with the key strengths of your products or services, and then structuring your response.
+
+- However, feeding this confidential document into a public AI service might breach confidentiality clauses, as data leaves your organization's control and may be retained externally. Additionally, sharing sensitive product and service details with a public AI service might warrant further consideration.
+
+Early cases involving companies like Samsung highlighted the real-world risks. Employees inadvertently exposed sensitive data through public AI tools, prompting many organizations to implement tighter restrictions.
+
+
+Organizations typically have two primary paths:
+
+1. Consult your compliance team to thoroughly evaluate public AI solutions, focusing on enterprise-grade options with stronger privacy assurances.
+
+2. Implement a private AI solution within your organization, ensuring data remains fully internal and simplifying compliance.
+
+While some companies even go both routes, the right choice depends on your organization's resources, regulatory environment, and risk tolerance. Balancing innovation and security continues to be a significant, evolving challenge.
+
+
+How is your organization addressing these issues? 
+
+#AgenticAI #BusinessAutomation #OperationalEfficiency #AITransformation #DataPrivacy",Status,-,-,5,0,-,-,-,-,-
+
+
