@@ -17,20 +17,22 @@
 - Use absolute imports for local packages: `github.com/christophberger/publer-analytics-report/...`
 
 ### Naming Conventions
-- Use camelCase for variables and functions
+- Prefer short names but ensure they're clear and descriptive. Rule of thumb: The smaller a function, the shorter the names of parameters and local variables can be
+- Use camelCase for unexported names (private)
 - Use PascalCase for exported names (public)
-- Use snake_case for unexported names (private)
-- Constants: SCREAMING_SNAKE_CASE
-
+- Apply the above to all identifiers (variables, functions, constants, type names, etc.)
+- Name interfaces with a name ending in -er. Examples: Reader, Writer, WriteCloser
+ 
 ### Error Handling
 - Always check and handle errors
 - Use fmt.Errorf for wrapping errors with context
 - Return errors as last return value
 
 ### Types
-- Use descriptive type names
+- Use short but descriptive type names
 - Prefer struct embedding over composition
-- Use interface{} sparingly
+- Use empty interfaces sparingly
+- Always use "any" when referring to the empty interface
 
 ### Testing
 - Test files: `*_test.go`
