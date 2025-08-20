@@ -18,9 +18,10 @@ Find three example CSV files in the `testdata/` directory:
 - Safe Swiss Cloud (Workspace) ∙ Overview ∙ 1 Jul 2025 - 31 Jul 2025.csv
 - Safe Swiss Cloud (Workspace) ∙ Post Insights ∙ 1 Jul 2025 - 31 Jul 2025.csv
 
-Note that they don't follow the correct CSV specification: They have two or three lines above the table that don't belong to the tabular data.
+Note that they don't follow the correct CSV specification: - They have two or three lines above the table that don't belong to the tabular data.
+- They might contain more than one table, separated by two empty lines.
 
-NOTE: The tool shall NOT process the files in `testdata/`. These are only meant as examples. The tool shall receive a single parameter on the command line.
+NOTE: The tool you work on shall NOT process the files in `testdata/`. These are only meant as examples. The tool shall receive a single parameter on the command line.
 
 - If the command line parameter is a file name or a path to a file name, the tool shall ensure the file is one of the CSV files - overview, hashtag analysis, or post insights - and find the other two files in the same directory.
 - If the parameter is a path, the tool shall expect to find the three CSV files at this path. 
