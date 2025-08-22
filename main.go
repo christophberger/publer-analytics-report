@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"database/sql"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
@@ -16,6 +17,7 @@ import (
 	"text/template"
 	"time"
 
+	_ "modernc.org/sqlite"
 	"gopkg.in/yaml.v3"
 )
 
@@ -89,33 +91,28 @@ type ReportData struct {
 }
 
 func extractDateFromFilename(filename string) (string, error) {
-	// Extract the date part from filename like: "Workspace ∙ Overview ∙ 1 Jul 2025 - 31 Jul 2025.csv"
 	parts := strings.Split(filename, "∙")
 	if len(parts) < 3 {
 		return "", fmt.Errorf("invalid filename format")
 	}
 
-	datePart := strings.TrimSpace(parts[len(parts)-1]) // Get the last part containing dates
+	datePart := strings.TrimSpace(parts[len(parts)-1])
 	datePart = strings.TrimSuffix(datePart, ".csv")
 
-	// Split the date range: "1 Jul 2025 - 31 Jul 2025"
 	dateRange := strings.Split(datePart, "-")
 	if len(dateRange) < 1 {
 		return "", fmt.Errorf("invalid date format in filename")
 	}
 
-	// Take the start date: "1 Jul 2025"
 	startDate := strings.TrimSpace(dateRange[0])
 	dateComponents := strings.Fields(startDate)
 	if len(dateComponents) < 3 {
 		return "", fmt.Errorf("invalid start date format")
 	}
 
-	// Parse month, year (we don't need the day for the filename)
 	month := dateComponents[1]
 	year := dateComponents[2]
 
-	// Convert month abbreviation to number
 	monthMap := map[string]string{
 		"Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", "May": "05", "Jun": "06",
 		"Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12",
@@ -130,13 +127,12 @@ func extractDateFromFilename(filename string) (string, error) {
 }
 
 func extractPeriodFromFilename(filename string) string {
-	// Extract the date part from filename like: "Workspace ∙ Overview ∙ 1 Jul 2025 - 31 Jul 2025.csv"
 	parts := strings.Split(filename, "∙")
 	if len(parts) < 3 {
 		return "Unknown Period"
 	}
 
-	datePart := strings.TrimSpace(parts[len(parts)-1]) // Get the last part containing dates
+	datePart := strings.TrimSpace(parts[len(parts)-1])
 	datePart = strings.TrimSuffix(datePart, ".csv")
 
 	return datePart
@@ -145,24 +141,20 @@ func extractPeriodFromFilename(filename string) string {
 func extractMonthFromFilename(filename string) string {
 	period := extractPeriodFromFilename(filename)
 
-	// Split the date range: "1 Jul 2025 - 31 Jul 2025"
 	dateRange := strings.Split(period, "-")
 	if len(dateRange) < 1 {
 		return "Unknown Month"
 	}
 
-	// Take the start date: "1 Jul 2025"
 	startDate := strings.TrimSpace(dateRange[0])
 	dateComponents := strings.Fields(startDate)
 	if len(dateComponents) < 3 {
 		return "Unknown Month"
 	}
 
-	// Parse month, year
 	month := dateComponents[1]
 	year := dateComponents[2]
 
-	// Convert month abbreviation to name
 	monthNames := map[string]string{
 		"Jan": "January", "Feb": "February", "Mar": "March", "Apr": "April", "May": "May", "Jun": "June",
 		"Jul": "July", "Aug": "August", "Sep": "September", "Oct": "October", "Nov": "November", "Dec": "December",
@@ -182,7 +174,6 @@ func generateReportFilename(workspaceName, overviewFile string) (string, error) 
 		return "", err
 	}
 
-	// Clean workspace name - remove "(Workspace)" part
 	cleanWorkspace := strings.ReplaceAll(workspaceName, "(Workspace)", "")
 	cleanWorkspace = strings.TrimSpace(cleanWorkspace)
 
@@ -288,6 +279,128 @@ func isHashtagAnalysisFile(filename string) bool {
 	return strings.Contains(filename, "Hashtag Analysis") && strings.HasSuffix(filename, ".csv")
 }
 
+func openDB(path string) (*sql.DB, error) {
+	return sql.Open("sqlite", path)
+}
+
+func initSchema(db *sql.DB) error {
+	stmts := []string{
+		"CREATE TABLE IF NOT EXISTS overview (workspace TEXT NOT NULL, period TEXT NOT NULL, followers INTEGER, reach INTEGER, reach_rate REAL, engagements INTEGER, engagement_rate REAL, PRIMARY KEY(workspace, period));",
+		"CREATE TABLE IF NOT EXISTS countries (workspace TEXT NOT NULL, period TEXT NOT NULL, country TEXT NOT NULL, users INTEGER, percentage REAL);",
+		"CREATE TABLE IF NOT EXISTS posts (workspace TEXT NOT NULL, period TEXT NOT NULL, post_text TEXT, post_type TEXT, reactions INTEGER);",
+		"CREATE TABLE IF NOT EXISTS hashtags (workspace TEXT NOT NULL, period TEXT NOT NULL, hashtag TEXT NOT NULL, score REAL, reach INTEGER, reactions INTEGER, comments INTEGER, shares INTEGER, video_views INTEGER);",
+	}
+	for _, s := range stmts {
+		if _, err := db.Exec(s); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func saveOverview(db *sql.DB, period string, data *OverviewData) error {
+	_, err := db.Exec(
+		"INSERT INTO overview(workspace, period, followers, reach, reach_rate, engagements, engagement_rate) VALUES(?,?,?,?,?,?,?) ON CONFLICT(workspace, period) DO UPDATE SET followers=excluded.followers, reach=excluded.reach, reach_rate=excluded.reach_rate, engagements=excluded.engagements, engagement_rate=excluded.engagement_rate",
+		data.WorkspaceName, period, data.Followers, data.Reach, data.ReachRate, data.Engagements, data.EngagementRate,
+	)
+	return err
+}
+
+func saveCountries(db *sql.DB, period string, workspace string, countries []CountryData) error {
+	if _, err := db.Exec("DELETE FROM countries WHERE workspace=? AND period=?", workspace, period); err != nil {
+		return err
+	}
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+	stmt, err := tx.Prepare("INSERT INTO countries(workspace, period, country, users, percentage) VALUES(?,?,?,?,?)")
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	for _, c := range countries {
+		if _, err := stmt.Exec(workspace, period, c.Country, c.Users, c.Percentage); err != nil {
+			stmt.Close()
+			tx.Rollback()
+			return err
+		}
+	}
+	stmt.Close()
+	return tx.Commit()
+}
+
+func savePosts(db *sql.DB, period string, workspace string, posts []PostData) error {
+	if _, err := db.Exec("DELETE FROM posts WHERE workspace=? AND period=?", workspace, period); err != nil {
+		return err
+	}
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+	stmt, err := tx.Prepare("INSERT INTO posts(workspace, period, post_text, post_type, reactions) VALUES(?,?,?,?,?)")
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	for _, p := range posts {
+		if _, err := stmt.Exec(workspace, period, p.PostText, p.PostType, p.Reactions); err != nil {
+			stmt.Close()
+			tx.Rollback()
+			return err
+		}
+	}
+	stmt.Close()
+	return tx.Commit()
+}
+
+func saveHashtags(db *sql.DB, period string, workspace string, hashtags []HashtagData) error {
+	if _, err := db.Exec("DELETE FROM hashtags WHERE workspace=? AND period=?", workspace, period); err != nil {
+		return err
+	}
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+	stmt, err := tx.Prepare("INSERT INTO hashtags(workspace, period, hashtag, score, reach, reactions, comments, shares, video_views) VALUES(?,?,?,?,?,?,?,?,?)")
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	for _, h := range hashtags {
+		if _, err := stmt.Exec(workspace, period, h.Hashtag, h.Score, h.Reach, h.Reactions, h.Comments, h.Shares, h.VideoViews); err != nil {
+			stmt.Close()
+			tx.Rollback()
+			return err
+		}
+	}
+	stmt.Close()
+	return tx.Commit()
+}
+
+func previousPeriod(period string) (string, error) {
+	t, err := time.Parse("2006-01", period)
+	if err != nil {
+		return "", err
+	}
+	prev := t.AddDate(0, -1, 0)
+	return prev.Format("2006-01"), nil
+}
+
+func getPreviousOverview(db *sql.DB, workspace, period string) (*OverviewData, error) {
+	row := db.QueryRow("SELECT followers, reach, reach_rate, engagements, engagement_rate FROM overview WHERE workspace=? AND period=?", workspace, period)
+	var followers, reach, engagements int
+	var reachRate, engagementRate float64
+	err := row.Scan(&followers, &reach, &reachRate, &engagements, &engagementRate)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &OverviewData{WorkspaceName: workspace, Followers: followers, Reach: reach, ReachRate: reachRate, Engagements: engagements, EngagementRate: engagementRate}, nil
+}
+
 func main() {
 	if len(os.Args) < 2 {
 		log.Fatal("Usage: go run main.go <file-or-directory>")
@@ -320,7 +433,35 @@ func main() {
 		log.Fatalf("Error reading hashtag analysis file: %v", err)
 	}
 
-	reportData := prepareReportData(overviewData, postsData, hashtagData, overviewFile)
+	period, err := extractDateFromFilename(overviewFile)
+	if err != nil {
+		log.Fatalf("Error extracting period from filename: %v", err)
+	}
+
+	db, err := openDB("analytics.db")
+	if err != nil {
+		log.Fatalf("Error opening database: %v", err)
+	}
+	defer db.Close()
+
+	if err := initSchema(db); err != nil {
+		log.Fatalf("Error initializing database: %v", err)
+	}
+
+	if err := saveOverview(db, period, overviewData); err != nil {
+		log.Fatalf("Error saving overview: %v", err)
+	}
+	if err := saveCountries(db, period, overviewData.WorkspaceName, overviewData.TopCountries); err != nil {
+		log.Fatalf("Error saving countries: %v", err)
+	}
+	if err := savePosts(db, period, overviewData.WorkspaceName, postsData); err != nil {
+		log.Fatalf("Error saving posts: %v", err)
+	}
+	if err := saveHashtags(db, period, overviewData.WorkspaceName, hashtagData); err != nil {
+		log.Fatalf("Error saving hashtags: %v", err)
+	}
+
+	reportData := prepareReportData(db, overviewData, postsData, hashtagData, overviewFile)
 
 	insights, err := generateInsights(reportData, config)
 	if err != nil {
@@ -337,7 +478,6 @@ func main() {
 	reportData.Insights = insights
 	reportData.NextSteps = nextSteps
 
-	// Generate the report filename
 	reportFilename, err := generateReportFilename(overviewData.WorkspaceName, overviewFile)
 	if err != nil {
 		log.Fatalf("Error generating report filename: %v", err)
@@ -464,9 +604,8 @@ func readPostInsightsFile(filename string) ([]PostData, error) {
 	reader := csv.NewReader(file)
 	reader.LazyQuotes = true
 	reader.TrimLeadingSpace = true
-	reader.FieldsPerRecord = -1 // Allow variable number of fields
+	reader.FieldsPerRecord = -1
 
-	// Skip header lines (4 lines)
 	for i := 0; i < 4; i++ {
 		_, err = reader.Read()
 		if err != nil {
@@ -481,7 +620,7 @@ func readPostInsightsFile(filename string) ([]PostData, error) {
 			break
 		}
 		if err != nil {
-			continue // Skip malformed records
+			continue
 		}
 
 		if len(record) < 8 {
@@ -492,7 +631,6 @@ func readPostInsightsFile(filename string) ([]PostData, error) {
 			PostType: strings.TrimSpace(record[5]),
 		}
 
-		// Only include Status posts for top-performing posts
 		if post.PostType == "Status" {
 			post.PostText = strings.TrimSpace(record[4])
 			if record[8] != "" && record[8] != "-" {
@@ -515,9 +653,8 @@ func readHashtagAnalysisFile(filename string) ([]HashtagData, error) {
 	reader := csv.NewReader(file)
 	reader.LazyQuotes = true
 	reader.TrimLeadingSpace = true
-	reader.FieldsPerRecord = -1 // Allow variable number of fields
+	reader.FieldsPerRecord = -1
 
-	// Skip header lines (4 lines)
 	for i := 0; i < 4; i++ {
 		_, err = reader.Read()
 		if err != nil {
@@ -532,7 +669,7 @@ func readHashtagAnalysisFile(filename string) ([]HashtagData, error) {
 			break
 		}
 		if err != nil {
-			continue // Skip malformed records
+			continue
 		}
 
 		if len(record) < 6 {
@@ -567,22 +704,18 @@ func readHashtagAnalysisFile(filename string) ([]HashtagData, error) {
 	return hashtags, nil
 }
 
-func prepareReportData(overview *OverviewData, posts []PostData, hashtags []HashtagData, overviewFile string) *ReportData {
+func prepareReportData(db *sql.DB, overview *OverviewData, posts []PostData, hashtags []HashtagData, overviewFile string) *ReportData {
 	period := extractPeriodFromFilename(overviewFile)
 	month := extractMonthFromFilename(overviewFile)
 
 	data := &ReportData{
-		Month:                month,
-		Period:               period,
-		Followers:            overview.Followers,
-		FollowersChange:      0,
-		Reach:                overview.Reach,
-		ReachChange:          0.0,
-		Engagements:          overview.Engagements,
-		EngagementsChange:    0.0,
-		EngagementRate:       overview.EngagementRate,
-		EngagementRateChange: 0.0,
-		TopCountries:         overview.TopCountries,
+		Month:          month,
+		Period:         period,
+		Followers:      overview.Followers,
+		Reach:          overview.Reach,
+		Engagements:    overview.Engagements,
+		EngagementRate: overview.EngagementRate,
+		TopCountries:   overview.TopCountries,
 	}
 
 	sort.Slice(data.TopCountries, func(i, j int) bool { return data.TopCountries[i].Users > data.TopCountries[j].Users })
@@ -602,6 +735,22 @@ func prepareReportData(overview *OverviewData, posts []PostData, hashtags []Hash
 		data.TopHashtags = hashtags[:5]
 	} else {
 		data.TopHashtags = hashtags
+	}
+
+	currPeriod, err := extractDateFromFilename(overviewFile)
+	if err == nil {
+		if prevPeriod, perr := previousPeriod(currPeriod); perr == nil {
+			if prev, qerr := getPreviousOverview(db, overview.WorkspaceName, prevPeriod); qerr == nil && prev != nil {
+				data.FollowersChange = overview.Followers - prev.Followers
+				if prev.Reach > 0 {
+					data.ReachChange = float64(overview.Reach-prev.Reach) * 100.0 / float64(prev.Reach)
+				}
+				if prev.Engagements > 0 {
+					data.EngagementsChange = float64(overview.Engagements-prev.Engagements) * 100.0 / float64(prev.Engagements)
+				}
+				data.EngagementRateChange = overview.EngagementRate - prev.EngagementRate
+			}
+		}
 	}
 
 	return data
@@ -643,7 +792,6 @@ func callOpenAI(prompt string, config *Config) (string, error) {
 		return "", fmt.Errorf("API key environment variable %s not set", config.API.APIKeyEnv)
 	}
 
-	// Create proper JSON request body using struct and marshaling
 	type Message struct {
 		Role    string `json:"role"`
 		Content string `json:"content"`
@@ -692,7 +840,6 @@ func callOpenAI(prompt string, config *Config) (string, error) {
 		return "", fmt.Errorf("API request failed with status: %d", resp.StatusCode)
 	}
 
-	// Parse JSON response properly
 	var response struct {
 		Choices []struct {
 			Message struct {
@@ -720,9 +867,9 @@ For the period {{.Period}}
 ## Monthly Performance Summary
 
 - Total Followers: {{.Followers}} (+/-{{.FollowersChange}} new/fewer followers)
-- Total Reach: {{.Reach}} (+/-{{.ReachChange}}% increase/decrease)
-- Total Engagements: {{.Engagements}} (+/-{{.EngagementsChange}}% increase/decrease)
-- Engagement Rate: {{.EngagementRate}}% (+/-{{.EngagementRateChange}}% increase/decrease)
+- Total Reach: {{.Reach}} (+/-{{printf "%.1f" .ReachChange}}% increase/decrease)
+- Total Engagements: {{.Engagements}} (+/-{{printf "%.1f" .EngagementsChange}}% increase/decrease)
+- Engagement Rate: {{.EngagementRate}}% (+/-{{printf "%.1f" .EngagementRateChange}}% increase/decrease)
 
 ## Interaction Breakdown
 
