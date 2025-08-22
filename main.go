@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
@@ -8,6 +9,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
+	"sort"
+	"strconv"
 	"strings"
 	"text/template"
 	"time"
@@ -212,14 +216,14 @@ func findCSVFilesInDir(dir string) (string, string, string, error) {
 		}
 
 		filename := file.Name()
-		filepath := dir + string(os.PathSeparator) + filename
+		fp := filepath.Join(dir, filename)
 
 		if isOverviewFile(filename) {
-			overview = filepath
+			overview = fp
 		} else if isPostInsightsFile(filename) {
-			posts = filepath
+			posts = fp
 		} else if isHashtagAnalysisFile(filename) {
-			hashtags = filepath
+			hashtags = fp
 		}
 	}
 
@@ -230,11 +234,15 @@ func findCSVFilesInDir(dir string) (string, string, string, error) {
 	return overview, posts, hashtags, nil
 }
 
-func findCSVFilesFromFile(filepath string) (string, string, string, error) {
-	dir := filepath[:strings.LastIndex(filepath, string(os.PathSeparator))]
-
+func findCSVFilesFromFile(filePath string) (string, string, string, error) {
+	dir := filepath.Dir(filePath)
 	if dir == "" {
 		dir = "."
+	}
+
+	base := filepath.Base(filePath)
+	if !(isOverviewFile(base) || isPostInsightsFile(base) || isHashtagAnalysisFile(base)) {
+		return "", "", "", fmt.Errorf("provided file is not a recognized CSV type: %s", base)
 	}
 
 	files, err := os.ReadDir(dir)
@@ -250,7 +258,7 @@ func findCSVFilesFromFile(filepath string) (string, string, string, error) {
 		}
 
 		currentFilename := file.Name()
-		currentFilepath := dir + string(os.PathSeparator) + currentFilename
+		currentFilepath := filepath.Join(dir, currentFilename)
 
 		if isOverviewFile(currentFilename) {
 			overview = currentFilepath
@@ -368,69 +376,79 @@ func readOverviewFile(filename string) (*OverviewData, error) {
 	reader := csv.NewReader(file)
 	reader.LazyQuotes = true
 	reader.TrimLeadingSpace = true
-	reader.FieldsPerRecord = -1 // Allow variable number of fields
+	reader.FieldsPerRecord = -1
 
-	// Skip header lines (3 lines)
-	for i := 0; i < 3; i++ {
-		_, err = reader.Read()
+	var rec []string
+	for {
+		rec, err = reader.Read()
 		if err != nil {
 			return nil, err
 		}
+		if len(rec) > 0 && strings.HasPrefix(strings.TrimSpace(rec[0]), "Workspace Name") {
+			break
+		}
 	}
 
-	// Read main data row
-	record, err := reader.Read()
+	rec, err = reader.Read()
 	if err != nil {
 		return nil, err
 	}
 
-	data := &OverviewData{
-		WorkspaceName: record[0],
+	data := &OverviewData{WorkspaceName: strings.TrimSpace(rec[0])}
+	if len(rec) > 2 {
+		fmt.Sscanf(strings.TrimSpace(rec[2]), "%d", &data.Followers)
 	}
-
-	// Parse numeric values
-	if len(record) > 2 {
-		fmt.Sscanf(strings.TrimSpace(record[2]), "%d", &data.Followers)
+	if len(rec) > 3 {
+		fmt.Sscanf(strings.TrimSpace(rec[3]), "%d", &data.Reach)
 	}
-	if len(record) > 3 {
-		fmt.Sscanf(strings.TrimSpace(record[3]), "%d", &data.Reach)
+	if len(rec) > 4 {
+		fmt.Sscanf(strings.TrimSpace(rec[4]), "%f", &data.ReachRate)
 	}
-	if len(record) > 4 {
-		fmt.Sscanf(strings.TrimSpace(record[4]), "%f", &data.ReachRate)
+	if len(rec) > 6 {
+		fmt.Sscanf(strings.TrimSpace(rec[6]), "%d", &data.Engagements)
 	}
-	if len(record) > 6 {
-		fmt.Sscanf(strings.TrimSpace(record[6]), "%d", &data.Engagements)
-	}
-	if len(record) > 7 {
-		rateStr := strings.TrimSpace(strings.TrimSuffix(record[7], "%"))
+	if len(rec) > 7 {
+		rateStr := strings.TrimSpace(strings.TrimSuffix(rec[7], "%"))
 		fmt.Sscanf(rateStr, "%f", &data.EngagementRate)
 	}
 
-	// Read "Top Countries" header line
-	_, err = reader.Read()
-	if err != nil {
-		return nil, err
+	for {
+		rec, err = reader.Read()
+		if err != nil {
+			return data, nil
+		}
+		if len(rec) > 0 && strings.HasPrefix(strings.TrimSpace(rec[0]), "Top Countries") {
+			break
+		}
 	}
 
-	// Start reading countries immediately (no separate country headers line)
-
-	// Read country data
-	for i := 0; i < 10; i++ { // Read up to 10 countries
-		record, err := reader.Read()
-		if err != nil || len(record) < 2 {
+	total := 0
+	for {
+		rec, err = reader.Read()
+		if err != nil || len(rec) < 2 {
 			break
 		}
-		if record[0] == "" || strings.HasPrefix(record[0], "Top") {
+		name := strings.TrimSpace(rec[0])
+		if name == "" || strings.HasPrefix(name, "Top") {
 			break
 		}
-
-		country := CountryData{
-			Country: strings.TrimSpace(record[0]),
+		country := CountryData{Country: name}
+		if strings.TrimSpace(rec[1]) == "" {
+			break
 		}
-		if record[1] != "" {
-			fmt.Sscanf(strings.TrimSpace(record[1]), "%d", &country.Users)
+		u, errNum := strconv.Atoi(strings.TrimSpace(rec[1]))
+		if errNum != nil {
+			break
 		}
+		country.Users = u
+		total += country.Users
 		data.TopCountries = append(data.TopCountries, country)
+	}
+
+	if total > 0 {
+		for i := range data.TopCountries {
+			data.TopCountries[i].Percentage = float64(data.TopCountries[i].Users) * 100.0 / float64(total)
+		}
 	}
 
 	return data, nil
@@ -550,7 +568,6 @@ func readHashtagAnalysisFile(filename string) ([]HashtagData, error) {
 }
 
 func prepareReportData(overview *OverviewData, posts []PostData, hashtags []HashtagData, overviewFile string) *ReportData {
-	// Extract date information from filename
 	period := extractPeriodFromFilename(overviewFile)
 	month := extractMonthFromFilename(overviewFile)
 
@@ -558,51 +575,29 @@ func prepareReportData(overview *OverviewData, posts []PostData, hashtags []Hash
 		Month:                month,
 		Period:               period,
 		Followers:            overview.Followers,
-		FollowersChange:      0, // TODO: Calculate from previous period
+		FollowersChange:      0,
 		Reach:                overview.Reach,
-		ReachChange:          0.0, // TODO: Calculate from previous period
+		ReachChange:          0.0,
 		Engagements:          overview.Engagements,
-		EngagementsChange:    0.0, // TODO: Calculate from previous period
+		EngagementsChange:    0.0,
 		EngagementRate:       overview.EngagementRate,
-		EngagementRateChange: 0.0, // TODO: Calculate from previous period
+		EngagementRateChange: 0.0,
 		TopCountries:         overview.TopCountries,
 	}
 
-	// Sort countries by users (descending)
-	for i := 0; i < len(data.TopCountries)-1; i++ {
-		for j := i + 1; j < len(data.TopCountries); j++ {
-			if data.TopCountries[i].Users < data.TopCountries[j].Users {
-				data.TopCountries[i], data.TopCountries[j] = data.TopCountries[j], data.TopCountries[i]
-			}
-		}
+	sort.Slice(data.TopCountries, func(i, j int) bool { return data.TopCountries[i].Users > data.TopCountries[j].Users })
+	if len(data.TopCountries) > 5 {
+		data.TopCountries = data.TopCountries[:5]
 	}
 
-	// Sort posts by reactions (descending)
-	for i := 0; i < len(posts)-1; i++ {
-		for j := i + 1; j < len(posts); j++ {
-			if posts[i].Reactions < posts[j].Reactions {
-				posts[i], posts[j] = posts[j], posts[i]
-			}
-		}
-	}
-
-	// Take top 5 posts
+	sort.Slice(posts, func(i, j int) bool { return posts[i].Reactions > posts[j].Reactions })
 	if len(posts) > 5 {
 		data.TopPosts = posts[:5]
 	} else {
 		data.TopPosts = posts
 	}
 
-	// Sort hashtags by score (descending)
-	for i := 0; i < len(hashtags)-1; i++ {
-		for j := i + 1; j < len(hashtags); j++ {
-			if hashtags[i].Score < hashtags[j].Score {
-				hashtags[i], hashtags[j] = hashtags[j], hashtags[i]
-			}
-		}
-	}
-
-	// Take top 5 hashtags
+	sort.Slice(hashtags, func(i, j int) bool { return hashtags[i].Score > hashtags[j].Score })
 	if len(hashtags) > 5 {
 		data.TopHashtags = hashtags[:5]
 	} else {
@@ -613,7 +608,7 @@ func prepareReportData(overview *OverviewData, posts []PostData, hashtags []Hash
 }
 
 func generateInsights(data *ReportData, config *Config) (string, error) {
-	prompt := fmt.Sprintf(`Based on the following social media analytics data for July 2025:
+	prompt := fmt.Sprintf(`Based on the following social media analytics data for %s (%s):
 
 - Followers: %d
 - Reach: %d
@@ -623,13 +618,13 @@ func generateInsights(data *ReportData, config *Config) (string, error) {
 - Top hashtags: %d hashtags analyzed
 
 Please provide insights and recommendations for improving social media performance. Focus on what's working well and what could be improved.`,
-		data.Followers, data.Reach, data.Engagements, data.EngagementRate, len(data.TopPosts), len(data.TopHashtags))
+		data.Month, data.Period, data.Followers, data.Reach, data.Engagements, data.EngagementRate, len(data.TopPosts), len(data.TopHashtags))
 
 	return callOpenAI(prompt, config)
 }
 
 func generateNextSteps(data *ReportData, config *Config) (string, error) {
-	prompt := fmt.Sprintf(`Based on the social media analytics data for July 2025:
+	prompt := fmt.Sprintf(`Based on the social media analytics data for %s (%s):
 
 - Followers: %d
 - Reach: %d  
@@ -637,7 +632,7 @@ func generateNextSteps(data *ReportData, config *Config) (string, error) {
 - Engagement Rate: %.2f%%
 
 Please suggest specific next steps and action items to optimize KPIs for the next month. Include concrete, actionable recommendations.`,
-		data.Followers, data.Reach, data.Engagements, data.EngagementRate)
+		data.Month, data.Period, data.Followers, data.Reach, data.Engagements, data.EngagementRate)
 
 	return callOpenAI(prompt, config)
 }
@@ -678,7 +673,7 @@ func callOpenAI(prompt string, config *Config) (string, error) {
 		return "", fmt.Errorf("error marshaling request: %v", err)
 	}
 
-	req, err := http.NewRequest("POST", config.API.BaseURL+"/chat/completions", strings.NewReader(string(requestBody)))
+	req, err := http.NewRequest("POST", config.API.BaseURL+"/chat/completions", bytes.NewReader(requestBody))
 	if err != nil {
 		return "", err
 	}
@@ -733,20 +728,20 @@ For the period {{.Period}}
 
 ### Top-Performing Posts by Reactions
 
-{{range $i, $post := .TopPosts}}{{if ge $i 5}}{{break}}{{end}}{{if eq $post.PostType "Status"}}
+{{range $i, $post := .TopPosts}}
 {{add $i 1}}. {{truncate $post.PostText 50}} ({{$post.Reactions}})
-{{end}}{{end}}
+{{end}}
 
 ### Top Hashtags by Score
 
-{{range $i, $hashtag := .TopHashtags}}{{if ge $i 5}}{{break}}{{end}}
+{{range $i, $hashtag := .TopHashtags}}
 {{add $i 1}}. {{$hashtag.Hashtag}} ({{$hashtag.Score}})
 {{end}}
 
 ### Geographic Distribution
 
-{{range $i, $country := .TopCountries}}{{if ge $i 5}}{{break}}{{end}}
-{{add $i 1}}. {{$country.Country}} ({{$country.Users}})
+{{range $i, $country := .TopCountries}}
+{{add $i 1}}. {{$country.Country}} ({{printf "%.1f" $country.Percentage}}%)
 {{end}}
 
 ## Insights and Recommendations
@@ -758,22 +753,14 @@ For the period {{.Period}}
 {{.NextSteps}}
 `
 
-	// Custom template functions
 	funcMap := template.FuncMap{
-		"add": func(a, b int) int {
-			return a + b
-		},
+		"add": func(a, b int) int { return a + b },
 		"truncate": func(s string, length int) string {
-			// Remove all newlines first
 			clean := strings.ReplaceAll(s, "\n", " ")
 			clean = strings.ReplaceAll(clean, "\r", " ")
-			// Remove extra whitespace
 			words := strings.Fields(clean)
 			clean = strings.Join(words, " ")
-
-			if len(clean) <= length {
-				return clean
-			}
+			if len(clean) <= length { return clean }
 			return clean[:length] + "..."
 		},
 	}
