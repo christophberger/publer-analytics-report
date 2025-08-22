@@ -17,8 +17,8 @@ import (
 	"text/template"
 	"time"
 
-	_ "modernc.org/sqlite"
 	"gopkg.in/yaml.v3"
+	_ "modernc.org/sqlite"
 )
 
 type Config struct {
@@ -748,7 +748,7 @@ func prepareReportData(db *sql.DB, overview *OverviewData, posts []PostData, has
 				if prev.Engagements > 0 {
 					data.EngagementsChange = float64(overview.Engagements-prev.Engagements) * 100.0 / float64(prev.Engagements)
 				}
-				data.EngagementRateChange = overview.EngagementRate - prev.EngagementRate
+				data.EngagementRateChange = (overview.EngagementRate-prev.EngagementRate) * 100.0 / prev.EngagementRate
 			}
 		}
 	}
@@ -866,10 +866,10 @@ For the period {{.Period}}
 
 ## Monthly Performance Summary
 
-- Total Followers: {{.Followers}} (+/-{{.FollowersChange}} new/fewer followers)
-- Total Reach: {{.Reach}} (+/-{{printf "%.1f" .ReachChange}}% increase/decrease)
-- Total Engagements: {{.Engagements}} (+/-{{printf "%.1f" .EngagementsChange}}% increase/decrease)
-- Engagement Rate: {{.EngagementRate}}% (+/-{{printf "%.1f" .EngagementRateChange}}% increase/decrease)
+- Total Followers: {{.Followers}} ({{signInt .FollowersChange}}{{absInt .FollowersChange}} {{newFewer .FollowersChange}} followers)
+- Total Reach: {{.Reach}} ({{signFloat .ReachChange}}{{printf "%.1f" (absFloat .ReachChange)}}% {{incDec .ReachChange}})
+- Total Engagements: {{.Engagements}} ({{signFloat .EngagementsChange}}{{printf "%.1f" (absFloat .EngagementsChange)}}% {{incDec .EngagementsChange}})
+- Engagement Rate: {{printf "%.2f" .EngagementRate}}% ({{signFloat .EngagementRateChange}}{{printf "%.1f" (absFloat .EngagementRateChange)}}% {{incDec .EngagementRateChange}})
 
 ## Interaction Breakdown
 
@@ -907,8 +907,54 @@ For the period {{.Period}}
 			clean = strings.ReplaceAll(clean, "\r", " ")
 			words := strings.Fields(clean)
 			clean = strings.Join(words, " ")
-			if len(clean) <= length { return clean }
+			if len(clean) <= length {
+				return clean
+			}
 			return clean[:length] + "..."
+		},
+		"signInt": func(n int) string {
+			if n > 0 {
+				return "+"
+			} else if n < 0 {
+				return "-"
+			}
+			return ""
+		},
+		"absInt": func(n int) int {
+			if n < 0 {
+				return -n
+			}
+			return n
+		},
+		"signFloat": func(f float64) string {
+			if f > 0 {
+				return "+"
+			} else if f < 0 {
+				return "-"
+			}
+			return ""
+		},
+		"absFloat": func(f float64) float64 {
+			if f < 0 {
+				return -f
+			}
+			return f
+		},
+		"newFewer": func(n int) string {
+			if n > 0 {
+				return "new"
+			} else if n < 0 {
+				return "fewer"
+			}
+			return "no change"
+		},
+		"incDec": func(f float64) string {
+			if f > 0 {
+				return "increase"
+			} else if f < 0 {
+				return "decrease"
+			}
+			return "no change"
 		},
 	}
 
