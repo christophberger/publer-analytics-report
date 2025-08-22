@@ -37,3 +37,4 @@ logs/
 publer-analytics-report
 publer-analytics-report.code-workspace
 ACME Inc *.md
+analytics.db
