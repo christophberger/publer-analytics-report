@@ -1,0 +1,117 @@
+# ACME Inc Analytics CSV Export
+# Start Date: 1 Jun 2025
+# End Date: 30 Jun 2025
+
+
+Date,Social account,Social network,Post link,Post text,Post type,Reach,Reach rate (%),Reactions,Comments,Shares,Engagement rate (%),Link clicks,Click through rate (%),Action
+2025-06-26 10:11,ACME Inc AG,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:7343913698668756992,Sign Up | LinkedIn,Link,44,3.42,1,0,0,4.55,-,-,-
+2025-06-26 08:55,Prodosh Banerjee,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:7343894572231524370,"What can AI do for you today?
+
+I keep hearing businesses wonder what artificial intelligence (AI) can actually do for them right now. While many of them ask this question from a sceptical angle, I like the challenge of providing answers that can suprise them, pleasantly. I know that beyond the noise, AI can do a lot, because we use it daily at ACME Inc AG. Here are some examples.
+
+We use AI to scan requests for proposal (RFPs) and extract key requirements in minutes rather than hours. We  ask our internal Private AI how our key competencies fit in with the key requirements of an RFI or RFP and help formulte response texts. The response time for writing proposals has dropped dramatically and the quality and breadth of the responses has improved significantly.
+
+We also use AI to, for example, look through our Emails to see if we have completed discussions with a particular sender and to identify if and how we should follow up with them. We can summarise lengthy email threads and client correspondence, turning hours of reading into quick, actionable insights. 
+
+We have used MCP to integrate our file system, ticketing system, CRM and ERP into our Private AI, allowing our private LLM to access our own internal data to analyse and respond to questions about our internal data.
+
+The content writers for our website analyse various content strategies with AI to see which website copy best resonates with which audience.
+
+A peer reported how they used AI to read responses to their advertising and formulate appropriate answers to keep the dialog going, suggest meetings or explain that a requested function was not part of the offering.
+
+I have many more examples from our own experience and that of our peers, which highlight the many ways in which innovative companies are using AI to make their daily lives better. 
+
+How about you? Do you think its time to jump into the world of better work practices? Join the discussion if you are not yet sure.
+
+#AIinBusiness #AIanalysis #AIefficiency #AIforBusiness",Status,-,-,7,0,-,-,-,-,-
+2025-06-11 09:43,ACME Inc AG,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:7338470904756137984,Sign Up | LinkedIn,Link,54,4.21,2,0,0,7.41,-,-,-
+2025-06-11 08:54,Prodosh Banerjee,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:7338458475779252224,"MCP is becoming the standard way to connect AI with enterprise data.
+
+The Model Context Protocol (MCP) is gaining traction as more and more data sources and tools become reachable via MCP servers, for easy access by Large Language Models.
+
+MCP enables us to provide our customers with clean, secure AI integrations that actually work at enterprise scale. Each internal system can become a source of information for a private LLM: from plain file systems to databases, ERP, email, and CRM systems. A private LLM can access all your business data while staying completely isolated from the internet. Your proprietary information remains exactly where it belongs: under your control.
+
+At ACME Inc, we help our customers to leverage MCP for interconnecting their internal data sources and business tools with private AI services. Instead of creating dozens of individual interfaces, we use MCP as a standardised bridge between data sources and LLMs. We develop custom MCP servers for any tool that has an API.
+
+Your data remains behind your firewall. Your AI gets smarter. And your team gets the insights they need without compromise.
+
+In short, MCP helps transform your systems into a source of data for a trusted AI system, which can answer questions, provide insights, analysis, recommendations, suggest texts and presentations and help you do an all round better job. 
+
+#MCP #EnterpriseAI #DataSovereignty #PrivateAI #AIIntegration
+
+",Status,-,-,6,0,-,-,-,-,-
+2025-06-10 15:10,Gerald Dürr,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:7338190795457372163,"AI is rewriting the rules of data sovereignty.
+
+With traditional cloud computing, we know what we're dealing with. The risks are mapped, the defenses are tested, and the frameworks work.
+
+But Artificial Intelligence (AI) changes the game.
+
+Public AI models operate like black boxes. Your data flows in, but you can't control where it goes or how it's used. Unlike proven cloud security measures, AI governance is still finding its footing.
+
+The unknown risks are what makes AI different. We might be discovering new risks as the technology evolves, and our protective measures haven't been battle-tested yet.
+
+This doesn't mean we should avoid AI. Instead, we need to be smarter about it.
+
+We need to build robust foundations now. Enhanced security frameworks, strict data governance, and trusted platforms that handle both cloud and AI workloads under one roof.
+
+Companies that get this right today will have a competitive advantage tomorrow.
+
+#DataSovereignty #AIStrategy #PrivateAI #DigitalSecurity",Status,-,-,7,3,-,-,-,-,-
+2025-06-05 10:15,ACME Inc AG,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:7336304573134827520,Sign Up | LinkedIn,Link,44,3.43,2,0,0,4.55,-,-,-
+2025-06-05 08:49,Prodosh Banerjee,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:7336282930014552066,"From tasks to intelligent action: how Agentic AI is enabling this.
+
+Task automation until very recently has been rule based. This precludes being able to deal with tasks which cannot be handled by the given set of rules. This where Agentic AI comes in.
+
+Autonomous systems based on Agentic AI can manage and optimize company's present workflows. They think, adapt, and act independently. 
+
+But here's where it gets exciting: AI agents can orchestrate hyperautomated processes across hybrid environments. The agents become the conductors of your entire automation orchestra.
+
+This is a conceptual breakthrough. We're shifting from ""automate the task"" to ""automate the thinking about the task.""
+
+Your process workflow can now become truly intelligent.
+
+#AgenticAI #Hyperautomation #CloudOperations #EnterpriseAI #AIOrchestration",Status,-,-,6,0,-,-,-,-,-
+2025-06-04 09:07,Gerald Dürr,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:7335925029014040576,"From Uncertainty to Opportunity: Waiting on AI Isn't the Answer
+
+When cloud computing first emerged in Europe, organizations faced two major obstacles in adopting it:
+
+- Uncertainty — not knowing what could possibly happen, from data breaches to regulatory enforcement
+- Risk — quantifiable threats such as the likelihood of a data breach or compliance failure
+
+Over time, as cloud computing matured, regulators introduced clear rules and frameworks like the EU GDPR. This regulatory clarity had two important effects:
+
+- It increased the requirements for data privacy and security
+- More importantly, at least for cloud adoption, it transformed a landscape of uncertainty (unknown unknowns) into one dominated by manageable risks
+
+With well-defined rules and consequences, companies could finally assess and quantify risks, for example, quantify the risk of data leakage due to a company’s own outdated on-prem infrastructure as opposed to the risk of data leakage due to a contractual breach by a cloud provider. This shift removed a significant barrier to cloud adoption because:
+
+- Humans are naturally risk-averse
+- But they dislike uncertainty even more
+
+Research on ambiguity aversion shows that when decision makers face both risk and ambiguity (uncertainty about probabilities or outcomes), they might even avoid the situation altogether. By replacing an uncertain situation with a situation of quantifiable risks, cloud computing became easier to adopt.
+
+Today, AI is bringing back this uncertainty:
+
+- Many regulatory frameworks around AI are still in flux or under development
+- Ambiguities around data privacy, algorithmic transparency, and liability create new unknowns
+- This uncertainty is once again slowing down AI adoption, as organizations struggle to evaluate what risks truly exist, which effects they have, and how to manage them
+
+But AI is here to stay, and it will create significant competitive advantages.
+
+Just as with cloud computing before, AI is here to stay, and it does and will create significant competitive advantages for those who know how to handle it. Hence, the path forward is not to wait until everyone else has left you behind, but to properly assess how to navigate through this initial phase. The value AI brings to companies will be too high to wait.
+
+#DataPrivacy #AIRegulation #RiskManagement #DigitalTransformation #AIStrategy #Compliance #GDPR",Status,-,-,4,0,-,-,-,-,-
+2025-06-03 15:27,ACME Inc AG,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:7335658281249525760,Sign Up | LinkedIn,Link,40,3.13,0,0,0,0.0,-,-,-
+2025-06-03 14:27,Prodosh Banerjee,Linkedin,https://www.linkedin.com/feed/update/urn:li:share:7335643184305254401,"Data sovereignty protects your business before you need protection.
+
+Too many companies treat data sovereignty as a ""someday"" project. But building a sovereign infrastructure takes months, not days. You can't flip a switch when geopolitical tensions suddenly threaten your data access.
+
+Data sovereignty works as a preventive measure. When foreign politics put your business data at risk, hoping for political solutions won't work as a strategy.
+
+Smart companies are acting now. They're moving critical workloads to trusted, sovereign infrastructure and implementing private AI solutions before the need arises. When external pressures mount, you want to be prepared.
+
+Will you build data sovereignty proactively, or scramble to catch up later?
+
+#DataSovereignty #BusinessResilience #PrivateAI #DigitalAutonomy #EnterpriseSecurity",Status,-,-,3,0,-,-,-,-,-
+
+

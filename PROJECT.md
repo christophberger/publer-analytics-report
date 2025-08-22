@@ -14,9 +14,9 @@ Three CSV files containing analytics data from Publer, a social media management
 
 Find three example CSV files in the `testdata/` directory:
 
-- Safe Swiss Cloud (Workspace) ∙ Hashtag Analysis ∙ 1 Jul 2025 - 31 Jul 2025.csv 
-- Safe Swiss Cloud (Workspace) ∙ Overview ∙ 1 Jul 2025 - 31 Jul 2025.csv
-- Safe Swiss Cloud (Workspace) ∙ Post Insights ∙ 1 Jul 2025 - 31 Jul 2025.csv
+- ACME Inc (Workspace) ∙ Hashtag Analysis ∙ 1 Jul 2025 - 31 Jul 2025.csv 
+- ACME Inc (Workspace) ∙ Overview ∙ 1 Jul 2025 - 31 Jul 2025.csv
+- ACME Inc (Workspace) ∙ Post Insights ∙ 1 Jul 2025 - 31 Jul 2025.csv
 
 Note that they don't follow the correct CSV specification: - They have two or three lines above the table that don't belong to the tabular data.
 - They might contain more than one table, separated by two empty lines. Every table has a header row.
