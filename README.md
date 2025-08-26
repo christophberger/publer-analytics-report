@@ -4,10 +4,10 @@ A small CLI that reads Publer Analytics CSV files for a month and generates a co
 
 ## Install
 
-- Prebuilt binaries: Download the latest release for your OS/arch from the GitHub Releases page and place the binary on your PATH
-- Go (requires Go >= 1.21):
+- **Prebuilt binaries:** Download the latest release for your OS/arch from the **GitHub Releases page** and place the binary on your PATH
+- **With Go** (requires Go >= 1.21):
   - `go install github.com/christophberger/publer-analytics-report@latest`
-- From source:
+- **From source:**
   - `git clone https://github.com/christophberger/publer-analytics-report`
   - `cd publer-analytics-report`
   - `go build -o publer-analytics-report ./...`
@@ -18,9 +18,12 @@ Create or edit `config.yaml` in the working directory:
 
 ```yaml
 api:
-  base_url: "https://api.openai.com/v1"   # OpenAI-compatible endpoint
-  api_key_env: "OPENAI_API_KEY"           # Name of the env var that holds the API key
-  model: "gpt-3.5-turbo"                  # Model to use
+  # OpenAI-compatible endpoint:
+  base_url: "https://api.openai.com/v1"   
+  # Name of the env var that holds the API key:
+  api_key_env: "OPENAI_API_KEY"           
+  # Model ID to use:
+  model: "gpt-oss-120b"                  
 ```
 
 - Set the environment variable referenced by `api_key_env`, for example:
