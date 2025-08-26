@@ -2,14 +2,24 @@ version: 2
 
 project_name: publer-analytics-report
 
+dist: dist
+
 before:
   hooks:
     - go mod tidy
     - go vet ./...
 
 builds:
-  - id: cli
+  - id: publer-analytics-report
     main: ./main.go
+    binary: publer-analytics-report
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+    mod_timestamp: '{{ .CommitTimestamp }}'
     goos:
       - linux
       - darwin
@@ -17,29 +27,18 @@ builds:
     goarch:
       - amd64
       - arm64
-    env:
-      - CGO_ENABLED=0
-    ldflags:
-      - -s -w -X main.version={{.Version}} -X main.commit={{.FullCommit}} -X main.date={{.Date}}
-    flags:
-      - -trimpath
-    binary: publer-analytics-report
-    mod_timestamp: '{{ .CommitTimestamp }}'
 
 archives:
-  - id: archive
+  - id: default
     builds:
-      - cli
+      - publer-analytics-report
+    name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
     format_overrides:
       - goos: windows
         format: zip
-    name_template: >-
-      {{- .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch -}}
-      {{- if .Arm }}v{{ .Arm }}{{ end -}}
     files:
       - LICENSE*
       - README*
-      - CHANGELOG*
       - config.yaml
 
 checksum:
@@ -47,10 +46,6 @@ checksum:
 
 snapshot:
   name_template: '{{ incpatch .Version }}-next'
-
-dockers: []
-
-distros: []
 
 changelog:
   use: git
@@ -67,25 +62,3 @@ release:
   draft: false
   prerelease: auto
   mode: replace
-
-brews:
-  - name: publer-analytics-report
-    repository:
-      owner: christophberger
-      name: homebrew-tap
-    commit_author:
-      name: goreleaserbot
-      email: [email protected]
-    directory: Formula
-    homepage: https://github.com/christophberger/publer-analytics-report
-    description: CLI tool that reads Publer Analytics CSV files and generates a Markdown report.
-    license: MIT
-    test: |
-      system "#{bin}/publer-analytics-report", "--help"
-    plattform: darwin
-    goarm: ["64"]
-    skip_upload: true
-
-nfpms: []
-
-signs: []
