@@ -748,7 +748,7 @@ func prepareReportData(db *sql.DB, overview *OverviewData, posts []PostData, has
 				if prev.Engagements > 0 {
 					data.EngagementsChange = float64(overview.Engagements-prev.Engagements) * 100.0 / float64(prev.Engagements)
 				}
-				data.EngagementRateChange = (overview.EngagementRate-prev.EngagementRate) * 100.0 / prev.EngagementRate
+				data.EngagementRateChange = (overview.EngagementRate - prev.EngagementRate) * 100.0 / prev.EngagementRate
 			}
 		}
 	}
