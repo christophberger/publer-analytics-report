@@ -1,0 +1,91 @@
+version: 2
+
+project_name: publer-analytics-report
+
+before:
+  hooks:
+    - go mod tidy
+    - go vet ./...
+
+builds:
+  - id: cli
+    main: ./main.go
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.FullCommit}} -X main.date={{.Date}}
+    flags:
+      - -trimpath
+    binary: publer-analytics-report
+    mod_timestamp: '{{ .CommitTimestamp }}'
+
+archives:
+  - id: archive
+    builds:
+      - cli
+    format_overrides:
+      - goos: windows
+        format: zip
+    name_template: >-
+      {{- .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch -}}
+      {{- if .Arm }}v{{ .Arm }}{{ end -}}
+    files:
+      - LICENSE*
+      - README*
+      - CHANGELOG*
+      - config.yaml
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: '{{ incpatch .Version }}-next'
+
+dockers: []
+
+distros: []
+
+changelog:
+  use: git
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+release:
+  github:
+    owner: christophberger
+    name: publer-analytics-report
+  draft: false
+  prerelease: auto
+  mode: replace
+
+brews:
+  - name: publer-analytics-report
+    repository:
+      owner: christophberger
+      name: homebrew-tap
+    commit_author:
+      name: goreleaserbot
+      email: [email protected]
+    directory: Formula
+    homepage: https://github.com/christophberger/publer-analytics-report
+    description: CLI tool that reads Publer Analytics CSV files and generates a Markdown report.
+    license: MIT
+    test: |
+      system "#{bin}/publer-analytics-report", "--help"
+    plattform: darwin
+    goarm: ["64"]
+    skip_upload: true
+
+nfpms: []
+
+signs: []
